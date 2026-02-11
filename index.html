@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Will You Be My Valentine? 💕</title>
+  <style>
+    :root {
+      --pink: #ff69b4;
+      --dark-pink: #ff1493;
+      --bg: #fff0f5;
+      --text: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffe4e1, #ffb6c1, #ff69b4);
+      color: var(--text);
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      color: rgba(255, 105, 180, 0.7);
+      animation: float 8s linear infinite;
+      user-select: none;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 3rem 2.5rem;
+      border-radius: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      max-width: 600px;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 105, 180, 0.3);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      color: var(--dark-pink);
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      text-shadow: 2px 2px 10px rgba(255,105,180,0.4);
+    }
+
+    .subtitle {
+      font-size: 1.6rem;
+      margin: 1.5rem 0 2.5rem;
+      color: #555;
+    }
+
+    .big-heart {
+      font-size: 9rem;
+      color: var(--pink);
+      margin: 1rem 0;
+      animation: beat 1.2s infinite alternate;
+      display: inline-block;
+      transform-origin: center;
+    }
+
+    @keyframes beat {
+      from { transform: scale(1); }
+      to   { transform: scale(1.15); }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2.5rem;
+      position: relative;
+    }
+
+    .btn {
+      padding: 1rem 3rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .yes {
+      background: var(--pink);
+      color: white;
+      box-shadow: 0 8px 25px rgba(255,105,180,0.5);
+    }
+
+    .yes:hover {
+      background: var(--dark-pink);
+      transform: scale(1.1);
+    }
+
+    .no {
+      background: #ccc;
+      color: #333;
+      position: relative;
+      transition: all 0.4s;
+    }
+
+    .no:hover {
+      background: #aaa;
+    }
+
+    .message {
+      font-size: 2rem;
+      color: var(--dark-pink);
+      margin-top: 2rem;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 2.8rem; }
+      .big-heart { font-size: 7rem; }
+      .buttons { flex-direction: column; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts-bg" id="hearts"></div>
+
+  <div class="container">
+    <div class="big-heart">❤️</div>
+    <h1>Hey cutie...</h1>
+    <p class="subtitle">I've been thinking about you a lot lately 💭</p>
+
+    <p style="font-size:1.4rem; margin:2rem 0;">So... I wanted to ask you something important:</p>
+
+    <h2 style="font-size:2.8rem; color:#c71585; margin:1.5rem 0;">Will you be my Valentine? 🥰</h2>
+
+    <div class="buttons">
+      <button class="btn yes" onclick="sayYes()">Yes!! 💖</button>
+      <button class="btn no" id="noBtn">No 😢</button>
+    </div>
+
+    <div class="message" id="yesMessage">
+      Yayyyy!!! 🎉💕 You've just made me the happiest person ever!<br>
+      I promise to make every day feel like Valentine's with you~ 😘
+    </div>
+  </div>
+
+  <script>
+    // Floating hearts background
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = ['❤️','💖','💕','💗','💞'][Math.floor(Math.random()*5)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+      heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+      document.getElementById('hearts').appendChild(heart);
+
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    setInterval(createHeart, 400);
+
+    // Playful No button
+    const noBtn = document.getElementById('noBtn');
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 100);
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    noBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert("Heyy wait— you can't say no that easily! 😭 Try the other button~ 💕");
+    });
+
+    // Yes response
+    function sayYes() {
+      document.querySelector('.subtitle').style.display = 'none';
+      document.querySelector('h2').style.display = 'none';
+      document.querySelector('.buttons').style.display = 'none';
+      document.getElementById('yesMessage').classList.add('show');
+      
+      // Extra hearts explosion
+      for(let i = 0; i < 30; i++) {
+        setTimeout(createHeart, i * 80);
+      }
+    }
+  </script>
+
+</body>
+</html>
